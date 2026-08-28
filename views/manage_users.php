@@ -28,241 +28,89 @@ $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kelola Pengguna</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-        /* Sidebar */
-.sidebar {
-    background-color: #333;
-    color: white;
-    width: 250px;
-    height: 100vh;
-    position: fixed;
-    top: 0;
-    left: 0;
-    padding-top: 30px;
-    transition: transform 0.3s ease-in-out;
-}
-
-/* Sidebar Header */
-.sidebar h3 {
-    font-size: 1.8rem;
-    font-weight: bold;
-    color: #FE9933;
-    margin-bottom: 40px;
-    text-align: center;
-    letter-spacing: 1px;
-    animation: flash 1.5s infinite alternate; /* Animasi kelap-kelip */
-    text-shadow: 0 0 10px rgba(255, 153, 51, 1), 0 0 20px rgba(255, 153, 51, 0.8), 0 0 30px rgba(255, 153, 51, 0.6); /* Efek glow */
-    transition: color 0.3s ease;
-}
-
-.sidebar h3:hover {
-    color: #e07d29;
-    text-shadow: 0 0 15px #e07d29, 0 0 30px #e07d29, 0 0 50px #e07d29; /* Lebih terang saat hover */
-}
-
-/* Definisikan animasi kelap-kelip */
-@keyframes flash {
-    0% {
-        color: #FE9933;
-        text-shadow: 0 0 10px rgba(255, 153, 51, 1), 0 0 20px rgba(255, 153, 51, 0.8), 0 0 30px rgba(255, 153, 51, 0.6);
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kelola Pengguna - Resep Kita</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Caveat:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: { navy: '#211E4B', mustard: '#F5B301', cream: '#FFFCF5' },
+      fontFamily: {
+        display: ['Fraunces', 'serif'],
+        hand: ['Caveat', 'cursive'],
+        sans: ['Plus Jakarta Sans', 'sans-serif'],
+      },
     }
-    50% {
-        color: #FFD700; /* Warna kuning lebih terang */
-        text-shadow: 0 0 15px rgba(255, 215, 0, 1), 0 0 30px rgba(255, 215, 0, 0.8), 0 0 50px rgba(255, 215, 0, 0.6);
-    }
-    100% {
-        color: #FE9933;
-        text-shadow: 0 0 10px rgba(255, 153, 51, 1), 0 0 20px rgba(255, 153, 51, 0.8), 0 0 30px rgba(255, 153, 51, 0.6);
-    }
+  }
 }
-
-
-.sidebar a {
-    color: #fff;
-    font-size: 1.1rem;
-    text-decoration: none;
-    padding: 15px 25px;
-    display: block;
-    transition: background-color 0.3s ease, padding-left 0.3s ease;
-}
-
-.sidebar a:hover {
-    background-color: #FE9933;
-    padding-left: 30px;
-}
-
-/* Main Content */
-.main-content {
-    margin-left: 260px;
-    padding: 30px;
-}
-
-.page-title {
-    font-size: 2.5rem;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 20px;
-    text-align: center;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    position: relative;
-}
-
-.page-title::after {
-    content: "";
-    position: absolute;
-    width: 50%;
-    height: 3px;
-    background-color: #FE9933;
-    bottom: -10px;
-    left: 25%;
-}
-
-/* Table Styling */
-.table {
-    width: 100%;
-    margin-top: 30px;
-    border-collapse: collapse;
-}
-
-.table th, .table td {
-    padding: 15px;
-    text-align: left;
-    vertical-align: middle;
-    font-size: 1rem;
-}
-
-.table th {
-    background-color: #FE9933;
-    color: white;
-    font-weight: bold;
-}
-
-.table-striped tbody tr:nth-of-type(odd) {
-    background-color: #f9f9f9;
-}
-
-.table-hover tbody tr:hover {
-    background-color: #f1f1f1;
-    transition: background-color 0.3s ease;
-}
-
-.table-row {
-    transition: transform 0.3s ease;
-}
-
-.table-row:hover {
-    transform: scale(1.02); /* Efek perbesaran sedikit saat hover */
-}
-
-/* Button Back */
-.btn-back {
-    background-color: #FE9933;
-    color: white;
-    padding: 10px 20px;
-    font-weight: bold;
-    text-decoration: none;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-}
-
-.btn-back:hover {
-    background-color: #e07d29;
-}
-
-/* Button Delete */
-.btn-delete {
-    padding: 8px 12px;
-    font-weight: bold;
-    text-decoration: none;
-    border-radius: 5px;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-}
-
-.btn-delete:hover {
-    background-color: #d9534f;
-    transform: translateY(-2px);
-}
-
-/* Add Shadow Effect to Table */
-.table td img {
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-/* General Responsive Design */
-@media (max-width: 768px) {
-    .sidebar {
-        width: 200px;
-    }
-    
-    .main-content {
-        margin-left: 210px;
-    }
-
-    .table th, .table td {
-        font-size: 0.9rem;
-    }
-}
-
-    </style>
+</script>
+<style>
+    body{ font-family:'Plus Jakarta Sans', sans-serif; background:#FFFCF5; }
+    .eyebrow{ font-size:0.72rem; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:#F5B301; }
+    .admin-sidebar{ width:220px; background:#211E4B; color:#fff; min-height:100vh; padding:30px 20px; position:fixed; top:0; left:0; }
+    .admin-sidebar h3{ font-family:'Fraunces',serif; margin-bottom:30px; }
+    .admin-sidebar a{ display:block; color:#fff; opacity:0.75; padding:10px 0; font-size:0.9rem; font-weight:600; text-decoration:none; }
+    .admin-sidebar a:hover{ opacity:1; color:#F5B301; }
+    .admin-main{ margin-left:220px; padding: 40px 30px; }
+    @media (max-width: 767px){ .admin-sidebar{ position:static; width:100%; min-height:auto; } .admin-main{ margin-left:0; } }
+</style>
 </head>
-<body>
+<body class="text-navy">
 
-    <!-- Sidebar -->
-<div class="sidebar">
-    <h3 class="text-center text-white">ResepKita</h3>
-    
+<div class="admin-sidebar">
+    <h3 class="text-lg">Resep Kita</h3>
+    <a href="admin_dashboard.php">Dashboard</a>
+    <a href="manage_users.php" class="text-mustard" style="opacity:1;">Kelola Pengguna</a>
     <a href="manage_recipes.php">Kelola Resep</a>
     <a href="view_feedback.php">Tampilkan Umpan Balik</a>
+    <a href="actions/logout.php">Logout</a>
 </div>
 
-<!-- Main Content -->
-<div class="main-content">
-    <div class="container">
-        <h2 class="page-title">Daftar Pengguna</h2>
-        <a href="admin_dashboard.php" class="btn btn-back mb-3">Kembali ke Dashboard</a>
+<div class="admin-main">
+    <div class="max-w-5xl mx-auto">
+        <span class="eyebrow block text-center">Panel Admin</span>
+        <h2 class="font-display text-2xl md:text-3xl font-semibold text-center mt-1 mb-6">Daftar Pengguna</h2>
+        <a href="admin_dashboard.php" class="inline-block bg-navy/5 hover:bg-navy hover:text-white text-navy rounded-full px-6 py-2.5 text-xs font-bold uppercase tracking-widest transition-colors mb-6">Kembali ke Dashboard</a>
 
-        <table class="table table-striped table-hover">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Username</th>
-                    <th>Email</th>
-                    <th>Password (Hash)</th>
-                    <th>Role</th>
-                    <th>Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($users as $user): ?>
-                    <tr class="table-row">
-                        <td><?php echo htmlspecialchars($user['id']); ?></td>
-                        <td><?php echo htmlspecialchars($user['username']); ?></td>
-                        <td><?php echo htmlspecialchars($user['email']); ?></td>
-                        <td><?php echo htmlspecialchars($user['password']); ?></td>
-                        <td><?php echo htmlspecialchars($user['role']); ?></td>
-                        <td>
-                            <!-- Tampilkan tombol hapus hanya untuk pengguna, bukan admin -->
-                            <?php if ($user['role'] !== 'admin'): ?>
-                                <a href="actions/manage_action.php?action=delete&id=<?php echo $user['id']; ?>" 
-                                   class="btn btn-danger btn-delete"
-                                   onclick="return confirm('Yakin ingin menghapus pengguna ini?');">
-                                   Hapus
-                                </a>
-                            <?php endif; ?>
-                        </td>
+        <div class="overflow-x-auto bg-white rounded-lg shadow-md">
+            <table class="w-full text-sm">
+                <thead>
+                    <tr class="bg-navy text-white uppercase text-xs tracking-widest">
+                        <th class="text-left px-4 py-3">ID</th>
+                        <th class="text-left px-4 py-3">Username</th>
+                        <th class="text-left px-4 py-3">Email</th>
+                        <th class="text-left px-4 py-3">Password (Hash)</th>
+                        <th class="text-left px-4 py-3">Role</th>
+                        <th class="text-left px-4 py-3">Aksi</th>
                     </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    <?php foreach ($users as $user): ?>
+                        <tr class="border-b border-navy/10">
+                            <td class="px-4 py-3"><?php echo htmlspecialchars($user['id']); ?></td>
+                            <td class="px-4 py-3 font-semibold"><?php echo htmlspecialchars($user['username']); ?></td>
+                            <td class="px-4 py-3"><?php echo htmlspecialchars($user['email']); ?></td>
+                            <td class="px-4 py-3"><small class="text-navy/40"><?php echo htmlspecialchars($user['password']); ?></small></td>
+                            <td class="px-4 py-3"><?php echo htmlspecialchars($user['role']); ?></td>
+                            <td class="px-4 py-3">
+                                <?php if ($user['role'] !== 'admin'): ?>
+                                    <a href="actions/manage_action.php?action=delete&id=<?php echo $user['id']; ?>"
+                                       class="text-red-500 hover:text-red-700 font-semibold text-xs uppercase tracking-widest"
+                                       onclick="return confirm('Yakin ingin menghapus pengguna ini?');">
+                                       Hapus
+                                    </a>
+                                <?php endif; ?>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
-
 
 </body>
 </html>

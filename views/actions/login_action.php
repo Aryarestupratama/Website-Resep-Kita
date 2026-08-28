@@ -1,5 +1,4 @@
 <?php
-session_start(); // Memulai sesi
 include '../../config/config.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {

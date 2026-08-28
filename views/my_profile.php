@@ -71,296 +71,74 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['change_password'])) {
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profil Saya</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-         /* Warna dasar dan hover pada navbar */
-        .navbar {
-            background-color: #F0902F;
-            padding: 10px 20px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Styling untuk navbar-brand */
-        .navbar-brand {
-            color: #fff !important; /* Warna teks putih */
-            background: linear-gradient(45deg, #ffdfb0, #fff); /* Gradien latar belakang */
-            -webkit-background-clip: text; /* Memotong latar belakang untuk hanya muncul di teks (WebKit) */
-            background-clip: text; /* Memotong latar belakang untuk teks (standar) */
-            -webkit-text-fill-color: transparent; /* Mengisi warna teks dengan transparan */
-            font-weight: bold; /* Teks tebal */
-            font-size: 1.5rem; /* Ukuran font */
-            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2); /* Bayangan pada teks */
-            transition: transform 0.3s ease, text-shadow 0.3s ease; /* Efek transisi */
-        }
-
-        .navbar-brand:hover {
-            transform: scale(1.1);
-            text-shadow: 2px 2px 8px rgba(255, 223, 176, 0.8);
-        }
-
-        /* Styling untuk nav-link dan nav-item */
-        .nav-item {
-            position: relative;
-        }
-
-        .nav-link {
-            color: #fff !important;
-            padding: 8px 16px;
-            border-radius: 5px;
-            transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
-        }
-
-        /* Hover effect untuk nav-link */
-        .nav-link:hover {
-            color: #F0902F !important;
-            background-color: #ffdfb0;
-            transform: scale(1.05); /* Sedikit membesar saat di-hover */
-        }
-
-        /* State aktif untuk nav-item */
-        .nav-item.active .nav-link {
-            background-color: #ffdfb0;
-            color: #F0902F !important;
-            font-weight: bold;
-        }
-
-        /* Style khusus untuk nav-link saat dihover */
-        .nav-link::before {
-            content: "";
-            position: absolute;
-            left: 0;
-            right: 0;
-            bottom: -4px;
-            height: 2px;
-            background-color: #ffdfb0;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .nav-link:hover::before {
-            opacity: 1;
-        }
-
-        /* Styling untuk navbar-toggler (hamburger icon) */
-        .navbar-toggler {
-            border-color: #fff;
-            outline: none;
-        }
-
-        .navbar-toggler-icon {
-            background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='rgba%28%255, %255, %255, 0.8%29' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
-        }
-
-        .navbar-toggler:hover .navbar-toggler-icon {
-            opacity: 0.7;
-        }
-
-        /* Responsif untuk dropdown navbar saat dalam mode collapse */
-        .collapse.show {
-            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
-            background-color: #F0902F;
-            border-radius: 8px;
-        }
-
-        /* Tambahan margin untuk jarak antar link */
-        .navbar-nav .nav-item {
-            margin-left: 10px;
-        }
-        /* Styling Umum untuk Container */
-body {
-    font-family: 'Noto Sans', sans-serif;
-    background-color: #f4f4f4; /* Latar belakang halaman */
-    color: #333;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Profil Saya - Resep Kita</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Caveat:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: { navy: '#211E4B', mustard: '#F5B301', cream: '#FFFCF5' },
+      fontFamily: {
+        display: ['Fraunces', 'serif'],
+        hand: ['Caveat', 'cursive'],
+        sans: ['Plus Jakarta Sans', 'sans-serif'],
+      },
+    }
+  }
 }
-
-.container {
-    margin-top: 40px;
-    padding: 30px;
-    background-color: #fff;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    transition: box-shadow 0.3s ease;
-}
-
-.container:hover {
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
-}
-
-.section-title {
-    font-size: 1.8rem;
-    color: #F0902F;
-    margin-bottom: 20px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.card {
-    background-color: #fff;
-    border: none;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    margin-bottom: 20px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-}
-
-.card-title {
-    font-size: 1.5rem;
-    color: #F0902F;
-    margin-bottom: 15px;
-}
-
-/* Menambahkan gaya untuk tombol toggle */
-/* Tombol Toggle */
-.toggle-form {
-    cursor: pointer;
-    color: #fff; /* Warna teks putih */
-    text-decoration: none; /* Menghilangkan garis bawah */
-    font-size: 1rem;
-    font-weight: 600;
-    padding: 12px 25px; /* Padding tombol */
-    background-color: #F0902F; /* Warna latar belakang oranye */
-    border-radius: 30px; /* Sudut melengkung lebih besar untuk tombol */
-    text-align: center; /* Menengahkan teks */
-    transition: all 0.3s ease; /* Transisi semua properti dengan efek halus */
-    display: inline-block; /* Agar tombol dapat berbaris dengan elemen lain */
-    border: none; /* Menghilangkan border default */
-}
-
-/* Efek hover saat cursor berada di atas tombol toggle */
-.toggle-form:hover {
-    color: #fff; /* Menjaga warna teks tetap putih saat hover */
-    background-color: #d6791a; /* Warna latar belakang berubah lebih gelap */
-    transform: translateY(-4px); /* Mengangkat tombol saat hover */
-    opacity: 0.9; /* Sedikit transparan saat hover */
-}
-
-/* Efek saat tombol toggle difokuskan (misal setelah diklik) */
-.toggle-form:focus {
-    outline: none; /* Menghilangkan outline default */
-    color: #fff; /* Menjaga warna teks tetap putih saat difokuskan */
-    background-color: #b5671d; /* Warna latar belakang lebih gelap saat fokus */
-    box-shadow: 0 0 8px rgba(255, 152, 51, 0.5); /* Bayangan lembut saat fokus */
-}
-
-/* Efek saat tombol toggle dalam keadaan aktif (terklik) */
-.toggle-form:active {
-    background-color: #d6791a; /* Warna latar belakang tetap gelap saat aktif */
-    transform: translateY(1px); /* Efek menekan tombol */
-}
-
-
-
-.hidden-form {
-    display: none;
-    margin-top: 20px;
-}
-
-.form-group {
-    margin-bottom: 15px;
-}
-
-.form-control {
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    transition: border-color 0.3s ease;
-}
-
-.form-control:focus {
-    border-color: #F0902F;
-    box-shadow: 0 0 5px rgba(255, 152, 51, 0.5);
-}
-
-/* Menambahkan penataan lebih lanjut untuk tombol dengan class .btn-primary */
-.btn-primary {
-    background-color: #F0902F;
-    border: none;
-    padding: 12px 20px;
-    border-radius: 5px;
-    font-size: 1rem;
-    font-weight: bold;
-    color: white;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease;
-    text-decoration: none;
-}
-
-/* Efek hover saat cursor berada di atas tombol */
-.btn-primary:hover {
-    background-color: #d6791a;
-    transform: translateY(-5px) scale(1.1);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    opacity: 0.9;
-}
-
-/* Efek saat tombol ditekan */
-.btn-primary:active {
-    transform: translateY(2px) scale(1);
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
-    opacity: 1;
-}
-
-/* Efek saat tombol difokuskan (misal setelah diklik) */
-.btn-primary:focus {
-    outline: none;
-    box-shadow: 0 0 10px rgba(255, 152, 51, 0.5);
-}
-
-.alert {
-    border-radius: 5px;
-    margin-bottom: 20px;
-    transition: opacity 0.3s ease;
-}
-
-.alert-danger {
-    background-color: rgba(255, 0, 0, 0.1);
-    border: 1px solid #ff0000;
-}
-
-.alert-success {
-    background-color: rgba(0, 255, 0, 0.1);
-    border: 1px solid #00ff00;
-}
-
-
-    </style>
+</script>
+<style>
+    body{ font-family:'Plus Jakarta Sans', sans-serif; background:#FFFCF5; }
+    .eyebrow{ font-size:0.72rem; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:#F5B301; }
+    .hidden-form{ display:none; }
+</style>
 </head>
-<body>
-<nav class="navbar navbar-expand-lg">
-        <a class="navbar-brand" href="index.php">ResepKita</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ml-auto">
-                    <li class="nav-item"><a class="nav-link" href="resep.php">Resep</a></li>
-                    <li class="nav-item"><a class="nav-link" href="upload.php">Unggah Resep</a></li>
-                    <li class="nav-item"><a class="nav-link" href="bookmarks.php">Bookmark</a></li>
-                <?php if (isset($_SESSION['username'])): ?>
-                
-                    <li class="nav-item"><a class="nav-link" href="actions/logout.php">Logout</a></li>
-                <?php else: ?>
-                    <li class="nav-item"><a class="nav-link" href="login.php">Login</a></li>
-                    <li class="nav-item"><a class="nav-link" href="register.php">Daftar</a></li>
-                <?php endif; ?>
-                <!-- Button notifikasi -->
-            </ul>
-        </div>
-    </nav>
+<body class="text-navy">
 
-<div class="container mt-4">
-    <h2 class="section-title">Profil Saya</h2>
+<nav class="max-w-5xl mx-auto flex items-center justify-between px-6 py-8">
+    <a href="index.php" class="font-hand text-3xl font-semibold">Resep Kita</a>
+    <button id="navToggle" class="md:hidden">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+    </button>
+    <ul id="navMenu" class="hidden md:flex items-center gap-8 text-xs font-semibold tracking-widest uppercase">
+        <li><a class="hover:text-mustard transition-colors" href="index.php">Beranda</a></li>
+        <li><a class="hover:text-mustard transition-colors" href="resep.php">Resep Saya</a></li>
+        <li><a class="hover:text-mustard transition-colors" href="upload.php">Unggah</a></li>
+        <li><a class="hover:text-mustard transition-colors" href="bookmarks.php">Bookmark</a></li>
+        <?php if (isset($_SESSION['username'])): ?>
+            <li><a class="text-mustard transition-colors" href="my_profile.php">Profil</a></li>
+            <li><a class="hover:text-mustard transition-colors" href="actions/logout.php">Logout</a></li>
+        <?php else: ?>
+            <li><a class="hover:text-mustard transition-colors" href="login.php">Login</a></li>
+            <li><a class="hover:text-mustard transition-colors" href="register.php">Daftar</a></li>
+        <?php endif; ?>
+    </ul>
+</nav>
+<ul id="navMenuMobile" class="hidden md:hidden flex-col gap-1 px-6 py-3 text-sm font-semibold">
+    <li><a class="block py-2" href="index.php">Beranda</a></li>
+    <li><a class="block py-2" href="resep.php">Resep Saya</a></li>
+    <li><a class="block py-2" href="upload.php">Unggah Resep</a></li>
+    <li><a class="block py-2" href="bookmarks.php">Bookmark</a></li>
+    <?php if (isset($_SESSION['username'])): ?>
+        <li><a class="block py-2" href="my_profile.php">Profil Saya</a></li>
+        <li><a class="block py-2" href="actions/logout.php">Logout</a></li>
+    <?php else: ?>
+        <li><a class="block py-2" href="login.php">Login</a></li>
+        <li><a class="block py-2" href="register.php">Daftar</a></li>
+    <?php endif; ?>
+</ul>
+
+<section class="max-w-2xl mx-auto px-6 pt-6 pb-20">
+    <div class="text-center mb-8">
+        <span class="eyebrow">Akun Saya</span>
+        <h2 class="font-display text-2xl md:text-3xl font-semibold mt-1">Profil Saya</h2>
+    </div>
 
     <?php if (!empty($errors)): ?>
-        <div class="alert alert-danger">
+        <div class="bg-red-50 border border-red-200 text-red-700 rounded-md px-4 py-3 mb-6 text-sm">
             <?php foreach ($errors as $error): ?>
                 <p><?php echo htmlspecialchars($error); ?></p>
             <?php endforeach; ?>
@@ -368,61 +146,68 @@ body {
     <?php endif; ?>
 
     <?php if (!empty($success_message)): ?>
-        <div class="alert alert-success">
+        <div class="bg-green-50 border border-green-200 text-green-700 rounded-md px-4 py-3 mb-6 text-sm">
             <p><?php echo htmlspecialchars($success_message); ?></p>
         </div>
     <?php endif; ?>
 
-    <div class="card">
-        <h5 class="card-title">Informasi Pengguna</h5>
-        <p><strong>Username:</strong> <?php echo htmlspecialchars($user['username']); ?></p>
-        <p><strong>Email:</strong> <?php echo htmlspecialchars($user['email']); ?></p>
-        <p><strong>Terdaftar pada:</strong> <?php echo htmlspecialchars($user['created_at']); ?></p>
+    <div class="bg-white rounded-lg shadow-md p-8 mb-6">
+        <h5 class="font-display font-semibold text-lg mb-4">Informasi Pengguna</h5>
+        <p class="text-sm mb-2"><strong>Username:</strong> <?php echo htmlspecialchars($user['username']); ?></p>
+        <p class="text-sm mb-2"><strong>Email:</strong> <?php echo htmlspecialchars($user['email']); ?></p>
+        <p class="text-sm"><strong>Terdaftar pada:</strong> <?php echo htmlspecialchars($user['created_at']); ?></p>
     </div>
 
-    <div class="mb-4">
-        <h4 class="section-title">Ubah Profil</h4>
-        <p class="toggle-form" id="toggle-profile-form">Ubah profil saya</p>
-        <form method="POST" id="profile-form" class="hidden-form">
-            <div class="form-group">
-                <label for="username">Username</label>
-                <input type="text" class="form-control" id="username" name="username" value="<?php echo htmlspecialchars($user['username']); ?>" required>
- </div>
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" class="form-control" id="email" name="email" value="<?php echo htmlspecialchars($user['email']); ?>" required>
+    <div class="bg-white rounded-lg shadow-md p-8 mb-6">
+        <h4 class="font-display font-semibold text-lg mb-3">Ubah Profil</h4>
+        <p class="text-navy font-semibold text-sm cursor-pointer inline-block mb-4 border-b-2 border-dashed border-mustard" id="toggle-profile-form">Ubah profil saya</p>
+        <form method="POST" id="profile-form" class="hidden-form space-y-4">
+            <div>
+                <label for="username" class="block text-sm font-medium mb-1">Username</label>
+                <input type="text" class="w-full rounded-md border border-navy/15 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-mustard" id="username" name="username" value="<?php echo htmlspecialchars($user['username']); ?>" required>
             </div>
-            <button type="submit" class="btn btn-primary" name="update_profile">Simpan Perubahan</button>
+            <div>
+                <label for="email" class="block text-sm font-medium mb-1">Email</label>
+                <input type="email" class="w-full rounded-md border border-navy/15 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-mustard" id="email" name="email" value="<?php echo htmlspecialchars($user['email']); ?>" required>
+            </div>
+            <button type="submit" class="bg-navy hover:bg-navy/90 text-white rounded-md px-6 py-2.5 font-semibold transition-colors" name="update_profile">Simpan Perubahan</button>
         </form>
     </div>
 
-    <div class="mb-4">
-        <h4 class="section-title">Ganti Password</h4>
-        <p class="toggle-form" id="toggle-password-form">Ganti password saya</p>
-        <form method="POST" id="password-form" class="hidden-form">
-            <div class="form-group">
-                <label for="current_password">Password Saat Ini</label>
-                <input type="password" class="form-control" id="current_password" name="current_password" required>
+    <div class="bg-white rounded-lg shadow-md p-8">
+        <h4 class="font-display font-semibold text-lg mb-3">Ganti Password</h4>
+        <p class="text-navy font-semibold text-sm cursor-pointer inline-block mb-4 border-b-2 border-dashed border-mustard" id="toggle-password-form">Ganti password saya</p>
+        <form method="POST" id="password-form" class="hidden-form space-y-4">
+            <div>
+                <label for="current_password" class="block text-sm font-medium mb-1">Password Saat Ini</label>
+                <input type="password" class="w-full rounded-md border border-navy/15 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-mustard" id="current_password" name="current_password" required>
             </div>
-            <div class="form-group">
-                <label for="new_password">Password Baru</label>
-                <input type="password" class="form-control" id="new_password" name="new_password" required>
+            <div>
+                <label for="new_password" class="block text-sm font-medium mb-1">Password Baru</label>
+                <input type="password" class="w-full rounded-md border border-navy/15 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-mustard" id="new_password" name="new_password" required>
             </div>
-            <div class="form-group">
-                <label for="confirm_password">Konfirmasi Password Baru</label>
-                <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
+            <div>
+                <label for="confirm_password" class="block text-sm font-medium mb-1">Konfirmasi Password Baru</label>
+                <input type="password" class="w-full rounded-md border border-navy/15 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-mustard" id="confirm_password" name="confirm_password" required>
             </div>
-            <button type="submit" class="btn btn-primary" name="change_password">Ubah Password</button>
+            <button type="submit" class="bg-navy hover:bg-navy/90 text-white rounded-md px-6 py-2.5 font-semibold transition-colors" name="change_password">Ubah Password</button>
         </form>
     </div>
-</div>  
+</section>
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<footer class="max-w-xl mx-auto text-center px-6 pb-16">
+    <span class="eyebrow">Hubungi Kami</span>
+    <h3 class="font-display text-xl md:text-2xl font-medium mt-2 leading-relaxed">
+        Ada pertanyaan, ide kolaborasi, atau sekadar mau say hello?<br>
+        <a href="mailto:halo@resepkita.co" class="font-display italic underline decoration-mustard underline-offset-4">halo@resepkita.co</a>
+    </h3>
+</footer>
 
 <script>
-    // Toggle form visibility
+    document.getElementById('navToggle').addEventListener('click', () => {
+        document.getElementById('navMenuMobile').classList.toggle('hidden');
+        document.getElementById('navMenuMobile').classList.toggle('flex');
+    });
     document.getElementById('toggle-profile-form').addEventListener('click', function() {
         document.getElementById('profile-form').classList.toggle('hidden-form');
     });
